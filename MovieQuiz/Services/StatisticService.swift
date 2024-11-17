@@ -23,10 +23,10 @@ final class StatisticService: StatisticServiceProtocol {
     var gamesCount: Int {
         get {
             storage.integer(forKey: Keys.gamesCount.rawValue)
-            }
+        }
         set {
             storage.set(newValue, forKey: Keys.gamesCount.rawValue)
-            }
+        }
     }
     
     var bestGame: GameResult {
@@ -35,39 +35,45 @@ final class StatisticService: StatisticServiceProtocol {
             let total: Int = storage.integer(forKey: Keys.total.rawValue)
             let date: Date = storage.object(forKey: Keys.total.rawValue) as? Date ?? Date()
             return GameResult(correct: correct, total: total, date: date)
-                }
-                set {
+        }
+        set {
             storage.set(newValue.correct, forKey: Keys.correct.rawValue)
             storage.set(newValue.total, forKey: Keys.total.rawValue)
             storage.set(newValue.date, forKey: Keys.total.rawValue)
-                }
+        }
     }
     
     private var correctAnswers: Int{
-           get{
-               storage.integer(forKey: Keys.correctAnswer.rawValue)
-           }
-           set{
-               storage.set(newValue, forKey: Keys.correctAnswer.rawValue)
-           }
-       }
+        get{
+            storage.integer(forKey: Keys.correctAnswer.rawValue)
+        }
+        set{
+            storage.set(newValue, forKey: Keys.correctAnswer.rawValue)
+        }
+    }
+    
     var totalAccuracy: Double {
-        Double(storage.integer(forKey: Keys.correctAnswer.rawValue)) * 100 / (Double(gamesCount) * 10)
+        if gamesCount > 0 {
+            return Double((correctAnswers * 100) / (10 * gamesCount))
+        } else {
+            return 0
+        }
     }
     
     func store(correct count: Int, total amount: Int) {
         gamesCount += 1
+        correctAnswers += count
         
         let bestCorrectCount = storage.object(forKey: Keys.correct.rawValue) as? Int ?? -1
         if bestCorrectCount < count {
             storage.set(count, forKey: Keys.correct.rawValue)
-                }
-                
+        }
+        
         let bestTotal = storage.object(forKey: Keys.total.rawValue) as? Int ?? -1
-                
+        
         if bestTotal < amount {
-        storage.set(amount, forKey: Keys.total.rawValue)
-                }
+            storage.set(amount, forKey: Keys.total.rawValue)
+        }
     }
 }
 

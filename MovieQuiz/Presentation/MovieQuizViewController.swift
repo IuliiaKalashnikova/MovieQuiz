@@ -29,7 +29,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var questionFactory: QuestionFactory?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenter?
-    private var statisticService:StatisticServiceProtocol?
+    private var statisticService: StatisticServiceProtocol?
     
     
     override func viewDidLoad() {
@@ -95,13 +95,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             
             if let statisticService = statisticService {
                 
-            statisticService.store(correct: correctAnswers, total: questionsAmount)
+                statisticService.store(correct: correctAnswers, total: questionsAmount)
                 
-            text = """
+                text = """
             Ваш результат \(correctAnswers)/\(questionsAmount)
             Количество сыгранных квизов: \(statisticService.gamesCount)
             Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(statisticService.bestGame.date.dateTimeString))
-            Средняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%"
+            Средняя точность \(String(format: "%.2f", statisticService.totalAccuracy))%
             """
                         }
             let viewModel = QuizResultsViewModel(
