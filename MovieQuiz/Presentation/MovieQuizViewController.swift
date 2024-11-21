@@ -8,6 +8,8 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     
     private var presenter: MovieQuizPresenter!
+    private var alertPresenter: AlertPresenter?
+    private var statisticService: StatisticServiceProtocol?
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
         presenter.yesButtonClicked()
