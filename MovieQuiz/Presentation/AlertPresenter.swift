@@ -17,7 +17,9 @@ import UIKit
             message: model.message,
             preferredStyle: .alert
         )
-        alert.view.accessibilityIdentifier = "Game result"
+        
+        alert.view.accessibilityIdentifier = "Alert"
+        
         let action = UIAlertAction(title:  model.buttonText, style: .default) {  _  in
             model.completion()
         }
